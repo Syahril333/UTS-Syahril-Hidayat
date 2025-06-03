@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV Interaktif - Syahril Hidayat</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #c8ec19, #1eb453);
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .container {
+      display: flex;
+      gap: 30px;
+      max-width: 1000px;
+      width: 90%;
+      padding: 20px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .left-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #e82754;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      flex: 1 1 250px;
+    }
+
+    .center-profile img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid #2196f3;
+      margin-bottom: 20px;
+      object-fit: cover;
+    }
+
+    .orbit-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .orbit-item {
+      background: #bbdefb;
+      padding: 10px 15px;
+      border-radius: 8px;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: background 0.3s, transform 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+    }
+
+    .orbit-item i {
+      color: #1565c0;
+      min-width: 20px;
+    }
+
+    .orbit-item:hover {
+      background: #64b5f6;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .info-box {
+      flex: 2 1 300px;
+      background: #3df6e6;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      font-size: 1rem;
+      color: #333;
+      opacity: 0;
+      transform: translateX(30px);
+      transition: all 0.5s ease;
+      min-height: 200px;
+    }
+
+    .info-box.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    @media (max-width: 800px) {
+      .container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .left-panel,
+      .info-box {
+        width: 100%;
+      }
+
+      .orbit-item {
+        font-size: 0.95rem;
+      }
+
+      .center-profile img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Kiri: foto dan opsi -->
+    <div class="left-panel">
+      <div class="center-profile">
+        <img src="Foto Syahril.jpeg" alt="Foto Syahril Hidayat">
+      </div>
+      <div class="orbit-list">
+        <div class="orbit-item" onclick="showInfo('biodata')">
+          <i class="fas fa-user"></i> Biodata
+        </div>
+        <div class="orbit-item" onclick="showInfo('kontak')">
+          <i class="fas fa-phone"></i> Kontak
+        </div>
+        <div class="orbit-item" onclick="showInfo('pendidikan')">
+          <i class="fas fa-graduation-cap"></i> Pendidikan
+        </div>
+        <div class="orbit-item" onclick="showInfo('pengalaman')">
+          <i class="fas fa-briefcase"></i> Pengalaman
+        </div>
+        <div class="orbit-item" onclick="showInfo('keahlian')">
+          <i class="fas fa-star"></i> Keahlian & Hobi
+        </div>
+      </div>
+    </div>
+
+    <!-- Kanan: box info -->
+    <div class="info-box" id="infoBox">
+      Klik salah satu opsi di sebelah kiri untuk melihat detail.
+    </div>
+  </div>
+
+  <script>
+    const infoData = {
+      biodata: `Nama: Syahril Hidayat<br>
+                Tempat, Tanggal Lahir: Jakarta, 28 Februari 2005<br>
+                Usia: 19 Tahun<br>
+                Jenis Kelamin: Laki-laki<br>
+                Agama: Islam<br>
+                Status: Belum Menikah<br>
+                Tinggi/Berat: 165 cm / 70 kg`,
+      kontak: `Alamat: Jl. Empang Lapangan Barat Blok A No.59, RT.16/RW.04, Kapuk Muara, Penjaringan, Jakarta Utara<br>
+               Telepon: 0813-8385-2596<br>
+               Email: syahrilh64@gmail.com`,
+      pendidikan: `SDN Kapuk Muara 01 Pagi (2011–2017)<br>
+                   SMPI Al-Muttaqin (2017–2020)<br>
+                   SMK Islam AL-Muttaqin (2020–2023)`,
+      pengalaman: `PKL di Kementerian Komunikasi dan Informatika RI<br>
+                   Lokasi: Gambir, Jakarta Pusat<br>
+                   Periode: Sep 2022 – Okt 2022`,
+      keahlian: `Keahlian: Microsoft Office, Bahasa Pemrograman Python<br>
+                 Hobi: Futsal, Membaca`
+    };
+
+    function showInfo(key) {
+      const infoBox = document.getElementById('infoBox');
+      infoBox.classList.remove('show');
+      setTimeout(() => {
+        infoBox.innerHTML = infoData[key];
+        infoBox.classList.add('show');
+      }, 100);
+    }
+  </script>
+</body>
+</html>
